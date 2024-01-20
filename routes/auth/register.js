@@ -47,16 +47,16 @@ const registerUser =
                 healthCondition,
 
             });
-            await newUser.save();
             const token = jsonwebtoken.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
             const activateUrl = `https://fit-food.onrender.com/api/activate-account/${email}/${token}`
-
+            
             const info = await transporter.sendMail({
                 from: process.env.mail,
                 to: email,
                 subject: 'Activation Link',
                 text: `Click the following link to Activate your account: ${activateUrl}`
             })
+            await newUser.save();
             res.status(200).json({ token, message: 'Registration successful' });
         } catch (error) {
             console.log(error)
