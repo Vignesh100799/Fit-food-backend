@@ -21,7 +21,7 @@ const forgotPass = async (req, res) => {
             from: process.env.mail,
             to: email,
             subject: 'Reset password link',
-            text: `Click the following link to reset your password: http://localhost:5173/reset-password/${token}`
+            text: `Click the following link to reset your password: https://fit-food-diet.netlify.app/reset-password/${token}`
         });
 
         res.status(200).json({ message: 'Password reset link sent successfully. And check Your Registered Mail to Continue' });

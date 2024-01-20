@@ -49,7 +49,7 @@ const registerUser =
             });
             await newUser.save();
             const token = jsonwebtoken.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            const activateUrl = `http://localhost:6505/api/activate-account/${email}/${token}`
+            const activateUrl = `https://fit-food.onrender.com/api/activate-account/${email}/${token}`
 
             const info = await transporter.sendMail({
                 from: process.env.mail,

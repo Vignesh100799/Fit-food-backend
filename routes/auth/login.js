@@ -25,7 +25,7 @@ const loginUser =
             const token = jsonwebtoken.sign({ userID: findUser._id }, process.env.JWT_SECRET, { expiresIn: '1hr' })
             const { password: hashPassword, ...userData } = findUser._doc
 
-            res.status(200).json({ message: 'Login successful', userData });
+            res.status(200).json({ message: 'Login successful', userData, token });
 
         } catch (error) {
             console.log(error)
