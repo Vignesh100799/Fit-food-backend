@@ -15,7 +15,7 @@ const activateUser = async (req, res) => {
             })
 
             if (activateUser.modifiedCount === 1) {
-                res.redirect(`http://localhost:5173/login`)
+                res.redirect(`https://fit-food-diet.netlify.app/login`)
             } else {
                 res.status(404).json({
                     message: "User not found or account is already activated"
