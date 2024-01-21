@@ -1,5 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 const User = require('../../modal/register')
+const bcrypt = require('bcryptjs');
 
 
 const resetPass = async (req, res) => {
