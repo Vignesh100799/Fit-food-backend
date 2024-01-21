@@ -13,8 +13,8 @@ const bodyParser = require('body-parser');
 
 const User = require('./modal/register')
 
-const connect_DB = require('./db/db')
-const mealSchema = require('./modal/fooditem');
+const connect_DB = require('./db/db');
+
 const registerUser = require('./routes/auth/register');
 const loginUser = require('./routes/auth/login');
 const activateUser = require('./routes/auth/activate');

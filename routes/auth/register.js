@@ -3,7 +3,7 @@ const registerSchema = require('../../Schema/register')
 const bcrypt = require('bcryptjs');
 const User = require('../../modal/register')
 const jsonwebtoken = require('jsonwebtoken');
-const transporter  = require('../../helpers/transporter');
+const transporter = require('../../helpers/transporter');
 
 const registerUser =
     async (req, res) => {
@@ -25,10 +25,15 @@ const registerUser =
                 healthConditionCategory,
                 healthCondition
             } = req.body
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ message: "User already registered with this email" });
+            }
             const validationResult = registerSchema.validate(req.body);
             if (validationResult.error) {
                 return res.status(400).json({ error: validationResult.error.details[0].message });
             }
+
             const hashPassword = await bcrypt.hash(password, 10)
             const newUser = new User({
                 firstName,
@@ -49,7 +54,7 @@ const registerUser =
             });
             const token = jsonwebtoken.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' });
             const activateUrl = `https://fit-food.onrender.com/api/activate-account/${email}/${token}`
-            
+
             const info = await transporter.sendMail({
                 from: process.env.mail,
                 to: email,
@@ -60,7 +65,7 @@ const registerUser =
             res.status(200).json({ token, message: 'Registration successful' });
         } catch (error) {
             console.log(error)
-            res.send({message : "Error on registration"}).status(500)
+            res.send({ message: "Error on registration" }).status(500)
         }
     }
 
